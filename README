@@ -1,0 +1,12 @@
+
+Decontractors: A Design by Contract implementation using Decorators
+-------------------------------------------------------------------
+
+The implementation idea came to me while discussion Design by Contract
+implementations (pyContract, pyDBC, ...) at the May 2011 meeting
+of PyUGAT, the Python User Group Austria.
+
+Enjoy :)
+
+    -- thp, 2011-05-19
+
