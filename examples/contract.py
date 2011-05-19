@@ -1,41 +1,16 @@
 # -*- coding: utf-8 -*-
-#
-# Decontractors - A Design by Contract(tm) implementation using Decorators
-# Copyright (c) 2011 Thomas Perl <m@thp.io>
-# http://thp.io/2011/decontractors/
-#
 
 from decontractors import *
 
+# This is a more elaborate example, showing how to define a contract
+# for a given code block. In this case, we can use the Contract class
+# from decontractors to specify three conditions which are checked in
+# the local scope (because they are defined there) at the beginning,
+# at the end and during the "with" block. To check the invariant, you
+# have to manually call the object (see "contract()" below). In this
+# case, you want to check the loop invariant before, during and after
+# the loop.
 
-@Precondition(lambda: x > 0 and y > 0)
-@Postcondition(lambda: __return__ == (x + y))
-def positive_nonzero_addition(x, y):
-    return x + y
-
-print positive_nonzero_addition(4, 1)
-
-class ShoppingList:
-    def __init__(self):
-        self.total = 0
-        self.limit = 10
-        self.items = []
-
-    upper_limit = Invariant(lambda: self.total < self.limit)
-
-    @upper_limit
-    def add(self, item, costs):
-        self.total += costs
-        self.items.append(item)
-
-
-list = ShoppingList()
-list.add('Bananas', 4.3)
-
-try:
-    list.add('Milk', 7)
-except DecontractorException, de:
-    print 'add failed. content now:', list.total, 'with', list.items
 
 def mean(a, b):
     print 'called: mean(%d, %d)' % (a, b)
@@ -46,11 +21,13 @@ def mean(a, b):
     postcondition = lambda: (a == b) and (a == (a0 + b0)/2)
 
     with Contract(precondition, invariant, postcondition) as contract:
+        contract()
         while a != b:
             contract()
             a += 1
             b -= 1
             contract()
+        contract()
 
     print 'mean calculated:', a, b
 
