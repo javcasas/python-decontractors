@@ -34,7 +34,7 @@
 
 # Will be parsed by setup.py to determine package metadata
 __author__ = 'Thomas Perl <m@thp.io>'
-__version__ = '0.1'
+__version__ = '0.2'
 __website__ = 'http://thp.io/2011/decontractors/'
 __license__ = 'Modified BSD License'
 
@@ -68,7 +68,7 @@ class Decontractor(object):
 
     def build_locals(self, f, args, kwargs):
         argspec = getattr(f, self.ARGSPEC)
-        if len(args) > argspec.args:
+        if len(args) > len(argspec.args):
             varargs = args[len(args):]
             args = args[:len(args)]
         else:
