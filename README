@@ -11,6 +11,10 @@ need to run the 2to3 utility to convert the sources, like this:
 
    2to3 -w decontractors.py examples/*.py
 
+If you want to use the decontractors only for development, but then avoid all
+checks during development, you can use the "nodecontractors" module instead of
+the "decontractors" module. This provides the same classes, but does nothing.
+
 Thanks to the following people who provided valuable feedback:
 
    - Cristina Cachero

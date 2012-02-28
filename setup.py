@@ -16,6 +16,7 @@ PACKAGE = 'decontractors'
 # List the modules that need to be installed/packaged
 MODULES = (
         'decontractors',
+        'nodecontractors',
 )
 
 # Metadata fields extracted from decontractors.py
