@@ -43,10 +43,11 @@ import functools
 import inspect
 
 class DecontractorException(BaseException):
-    def __init__(self, decontractor, locals):
-        BaseException.__init__(self, str(locals))
+    def __init__(self, decontractor, locals, msg):
+        BaseException.__init__(self, str(locals), msg)
         self.decontractor = decontractor
         self.locals = locals
+        self.msg = msg
 
 class PreconditionViolation(DecontractorException): pass
 class PostconditionViolation(DecontractorException): pass
@@ -54,8 +55,9 @@ class PostconditionViolation(DecontractorException): pass
 class Decontractor(object):
     ARGSPEC = '__decontractor_argspec__'
 
-    def __init__(self, check):
+    def __init__(self, check, msg=""):
         self.check = check
+        self.msg = msg
 
     def verify(self, locals):
         return self.check_before(locals)
@@ -106,7 +108,7 @@ class Invariant(Decontractor):
             result = eval(self.check.__code__, before.copy())
 
         if not result:
-            raise PreconditionViolation(self, before)
+            raise PreconditionViolation(self, before, self.msg)
 
         return result
 
@@ -119,7 +121,7 @@ class Invariant(Decontractor):
             result = eval(self.check.__code__, locals.copy())
 
         if not result:
-            raise PostconditionViolation(self, locals)
+            raise PostconditionViolation(self, locals, self.msg)
 
         return result
 
