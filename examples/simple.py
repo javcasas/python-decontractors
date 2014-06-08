@@ -5,7 +5,7 @@ from decontractors import *
 # Simple example on how you could use decontractors to specify
 # properties of input values and properties of the return value
 
-@Precondition(lambda: x > 0 and y > 0)
+@Precondition(lambda: x > 0 and y > 0, "Both params must be greater than zero")
 @Postcondition(lambda: __return__ == (x + y))
 def positive_nonzero_addition(x, y):
     # Try changing the expression to return something else
